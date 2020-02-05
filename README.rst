@@ -1,3 +1,7 @@
+.. image:: https://github.com/Superbil/django-spgateway/workflows/Django%20application/badge.svg?branch=master
+   :alt: Django application
+
+
 ====================
 Spgateway for Django
 ====================
