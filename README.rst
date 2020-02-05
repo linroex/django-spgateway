@@ -29,13 +29,13 @@ Installation
    .. code:: Python
 
     SPGATEWAY_PROFILE = {
-        'YOUR_MerchantID': {
+        'YOUR_STORE_KEY': {
             'MerchantID': 'YOUR_MerchantID',
             'HashKey': 'YOUR_HashKey',
             'HashIV': 'YOUR_HashIV',
         },
     }
-    SPGATEWAY_MERCHANTID = 'YOUR_MerchantID'
+    SPGATEWAY_STORE_KEY = 'YOUR_STORE_KEY'
     SPGATEWAY_ORDERMODEL = 'yourapp.Order'
 
 

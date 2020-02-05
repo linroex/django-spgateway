@@ -275,7 +275,7 @@ class SpgatewayOrderMixin(models.Model):
         return None
 
     def _generate_new_kwargs(self, **kwargs):
-        profile = settings.SPGATEWAY_PROFILE[settings.SPGATEWAY_MERCHANTID]
+        profile = settings.SPGATEWAY_PROFILE[settings.SPGATEWAY_STORE_KEY]
         merchant_id = profile['MerchantID']
 
         new_kwargs = dict(
