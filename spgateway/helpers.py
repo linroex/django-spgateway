@@ -1,5 +1,7 @@
 import logging
 
+SPGATEWAY_API_VERSION = '1.5'
+
 
 class Warnings(object):
     def __init__(self, logger=None):
@@ -67,7 +69,7 @@ def generate_TradeInfo_TradeSha(
                             ##################################################################################################
     RespondType='JSON',     # 回傳格式　　　　　　    JSON 或是 String
     TimeStamp=None,         # 時間戳記　　　　　　    自從 Unix 纪元
-    Version='1.4',          # 串接程式版本
+    Version=SPGATEWAY_API_VERSION,          # 串接程式版本
     LangType='zh-tw',       # 語系　　　　　　　　    英文版參數為 en 繁體中文版參數為 zh-tw
                             # 　　　　　　　　　　    當未提供此參數或此參數數值錯誤時，將預設為繁體中文版
                             ##################################################################################################
@@ -156,8 +158,8 @@ def generate_TradeInfo_TradeSha(
     else:
         warnings.warning('TimeStamp not str, time, or datetime. Bypass then.')
 
-    if Version != '1.4':
-        warnings.warning('Version is not current version, which is 1.4')
+    if Version != SPGATEWAY_API_VERSION:
+        warnings.warning('Version is not current version, which is {}'.format(SPGATEWAY_API_VERSION))
 
     if LangType:
         if LangType not in ('en', 'zh-tw'):
