@@ -7,7 +7,7 @@ Write Django and your store as usual, and let ``django-spgateway`` handle your t
 Requirements
 ------------
 - Python 3.7
-- Django 2.1
+- Django 2.2
 - pycrypto 2.6.1
 - We only tested on environment as below
 
@@ -129,7 +129,7 @@ Bugs and suggestions
 
 If you have found a bug or if you have a request for additional functionality, please use the issue tracker on GitHub.
 
-https://github.com/cjltsod/django-spgateway/issues
+https://github.com/superbil/django-spgateway/issues
 
 
 License
@@ -138,10 +138,11 @@ License
 You can use this under MIT. See `LICENSE
 <LICENSE>`_ file for details.
 
+
 Author
 ------
 
-Developed and maintained by `CJLTSOD <https://about.me/cjltsod/>`_.
+Developed and maintained by `CJLTSOD <https://about.me/cjltsod/>`_, `Superbil <https://github.com/superbil/>`_.
 
 Thanks to everybody that has contributed pull requests, ideas, issues, comments and kind words.
 
