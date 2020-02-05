@@ -299,10 +299,10 @@ def generate_TradeInfo_TradeSha(
     ordered_message = OrderedDict(message_list)
 
     message_str = addpadding(urlencode(ordered_message))
-    TradeInfo = aes_obj.encrypt(message_str).hex()
+    tradeInfo = aes_obj.encrypt(message_str).hex()
 
     hash = SHA256.new()
-    hash.update('HashKey={}&{}&HashIV={}'.format(HashKey, TradeInfo, HashIV).encode())
-    TradeSha = hash.hexdigest().upper()
+    hash.update('HashKey={}&{}&HashIV={}'.format(HashKey, tradeInfo, HashIV).encode())
+    tradeSha = hash.hexdigest().upper()
 
-    return TradeInfo, TradeSha, warnings
+    return tradeInfo, tradeSha, warnings
