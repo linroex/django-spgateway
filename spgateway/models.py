@@ -303,12 +303,12 @@ class SpgatewayOrderMixin(models.Model):
         tradeinfo_kwargs = default_kwargs.copy()
         tradeinfo_kwargs.update(kwargs)
 
-        TradeInfo, TradeSha, warnings = generate_TradeInfo_TradeSha(**tradeinfo_kwargs)
+        tradeInfo, tradeSha, warnings = generate_TradeInfo_TradeSha(**tradeinfo_kwargs)
 
         form_initial_dict = dict(
-            MerchantID=new_kwargs['MerchantID'],
-            TradeInfo=TradeInfo,
-            TradeSha=TradeSha,
+            MerchantID = new_kwargs['MerchantID'],
+            TradeInfo = tradeInfo,
+            TradeSha = tradeSha,
         )
 
         return SpgatewayForm(initial=form_initial_dict)

@@ -25,16 +25,17 @@ class SpgatewayMixin(object):
         return super(SpgatewayMixin, self).dispatch(request, *args, **kwargs)
 
     def get_TradeInfo(self, use_json=True):
-        MerchantID = self.request.POST.get('MerchantID')
-        TradeInfo_encrypted = self.request.POST.get('TradeInfo')
-        TradeSha = self.request.POST.get('TradeSha', '')
+        merchantID = self.request.POST.get('MerchantID')
+        tradeInfo_encrypted = self.request.POST.get('TradeInfo')
+        tradeSha = self.request.POST.get('TradeSha', '')
 
+        profile = settings.SPGATEWAY_PROFILE[settings.SPGATEWAY_STORE_KEY]
         return decrypt_TradeInfo_TradeSha(
-            HashKey=settings.SPGATEWAY_PROFILE[MerchantID]['HashKey'],
-            HashIV=settings.SPGATEWAY_PROFILE[MerchantID]['HashIV'],
-            TradeInfo=TradeInfo_encrypted,
-            TradeSha=TradeSha,
-            use_json=use_json,
+            HashKey = profile['HashKey'],
+            HashIV = profile['HashIV'],
+            TradeInfo = tradeInfo_encrypted,
+            TradeSha = tradeSha,
+            use_json = use_json,
         )
 
     def get_order(self, **kwargs):
