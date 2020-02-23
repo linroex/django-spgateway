@@ -7,11 +7,11 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
-
 from .helpers import decrypt_TradeInfo_TradeSha
 from . import models
 
-# Create your views here.
+import logging
+logger = logging.getLogger(__name__)
 
 
 class SpgatewayMixin(object):
@@ -31,10 +31,10 @@ class SpgatewayMixin(object):
 
         profile = settings.SPGATEWAY_PROFILE[settings.SPGATEWAY_STORE_KEY]
         return decrypt_TradeInfo_TradeSha(
-            HashKey = profile['HashKey'],
-            HashIV = profile['HashIV'],
-            TradeInfo = tradeInfo_encrypted,
-            TradeSha = tradeSha,
+            hashKey = profile['HashKey'],
+            hashIV = profile['HashIV'],
+            tradeInfo = tradeInfo_encrypted,
+            tradeSha = tradeSha,
             use_json = use_json,
         )
 
@@ -82,6 +82,7 @@ class SpgatewayReturnView(SpgatewayMixin, generic.View):
         return self.object
 
     def post(self, request, *args, **kwargs):
+        logger.debug("SpgatewayReturnView POST: {}".format(request.POST))
         self.request = request
         self.trade_info = self.get_TradeInfo()
         self.object = self.get_order(slug=self.trade_info.get('Result', {}).get('MerchantOrderNo'))

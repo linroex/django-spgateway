@@ -1,4 +1,6 @@
 import logging
+logger = logging.getLogger(__name__)
+
 
 SPGATEWAY_API_VERSION = '1.5'
 
@@ -19,41 +21,42 @@ class Warnings(object):
             return False
 
 
-def decrypt_TradeInfo_TradeSha(
-    HashKey,
-    HashIV,
-    TradeInfo,
-    TradeSha=None,
-    use_json=True,
-):
+def decrypt_TradeInfo_TradeSha(*args, **kwargs):
     from Crypto.Cipher import AES
     from Crypto.Hash import SHA256
     from urllib.parse import parse_qs
     import codecs
     import json
 
+    hashKey = kwargs.get('hashKey')
+    hashIV = kwargs.get('hashIV')
+    tradeInfo = kwargs.get('tradeInfo')
+    tradeSha = kwargs.get('tradeSha', None)
+    use_json = kwargs.get('use_json', True)
+
     def removepadding(message, blocksize=32):
         if message[-1] < blocksize:
             return message[:(-1 * ord(message[-1:])):]
         return message
 
-    aes_obj = AES.new(HashKey, AES.MODE_CBC, HashIV)
+    aes_obj = AES.new(hashKey, AES.MODE_CBC, hashIV)
 
-    if TradeSha:
+    if tradeSha:
         hash = SHA256.new()
-        hash.update('HashKey={}&{}&HashIV={}'.format(HashKey, TradeInfo, HashIV).encode())
-        TradeSha_verify = hash.hexdigest().upper()
-        if TradeSha != TradeSha_verify:
+        hash.update('HashKey={}&{}&HashIV={}'.format(hashKey, tradeInfo, hashIV).encode())
+        tradeSha_verify = hash.hexdigest().upper()
+        if tradeSha != tradeSha_verify:
             raise Exception('TradeSha not match')
 
-    TradeInfo_decrypted = removepadding(aes_obj.decrypt(codecs.decode(TradeInfo, 'hex_codec'))).decode()
+    tradeInfo_decrypted = removepadding(aes_obj.decrypt(codecs.decode(tradeInfo, 'hex_codec'))).decode()
+    logger.debug("tradeInfo_decrypted: {}".format(tradeInfo_decrypted))
 
     if use_json:
-        TradeInfo_dict = json.loads(TradeInfo_decrypted)
+        tradeInfo_dict = json.loads(tradeInfo_decrypted)
     else:
-        TradeInfo_dict = parse_qs(TradeInfo_decrypted)
+        tradeInfo_dict = parse_qs(tradeInfo_decrypted)
 
-    return TradeInfo_dict
+    return tradeInfo_dict
 
 
 def generate_TradeInfo_TradeSha(
@@ -297,6 +300,7 @@ def generate_TradeInfo_TradeSha(
     from collections import OrderedDict
 
     ordered_message = OrderedDict(message_list)
+    logger.debug("ordered_message: {}".format(ordered_message))
 
     message_str = addpadding(urlencode(ordered_message))
     tradeInfo = aes_obj.encrypt(message_str).hex()

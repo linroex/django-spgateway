@@ -8,6 +8,9 @@ import uuid
 from .helpers import generate_TradeInfo_TradeSha
 from .forms import SpgatewayForm
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 # Create your models here.
 class SpgatewayResponseMixin(object):
@@ -304,6 +307,7 @@ class SpgatewayOrderMixin(models.Model):
         tradeinfo_kwargs.update(kwargs)
 
         tradeInfo, tradeSha, warnings = generate_TradeInfo_TradeSha(**tradeinfo_kwargs)
+        logger.debug("TradeInfo: {} TradeSha: {}".format(tradeInfo, tradeSha))
 
         form_initial_dict = dict(
             MerchantID = new_kwargs['MerchantID'],
