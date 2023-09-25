@@ -9,4 +9,4 @@ class SpgatewayForm(forms.Form):
     TradeInfo = forms.CharField(widget=forms.HiddenInput())
     TradeSha = forms.CharField(widget=forms.HiddenInput())
     Version = forms.CharField(max_length=5, initial=api_version, widget=forms.HiddenInput())
-    action = 'https://ccore.spgateway.com/MPG/mpg_gateway' if settings.DEBUG else 'https://core.spgateway.com/MPG/mpg_gateway'
+    action = 'https://ccore.newebpay.com/MPG/mpg_gateway' if settings.DEBUG else 'https://core.newebpay.com/MPG/mpg_gateway'
